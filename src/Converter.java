@@ -5,24 +5,13 @@
  */
 public class Converter {
 
-    // суммируем шаги за заданный месяц
-    public int sumStepsByMonth(int month) {
-        int stepsSum = 0;
-        int[] monthData = StepTracker.monthToData.get(month);
-        for (int step : monthData) {
-            stepsSum += step;
-        }
-        return stepsSum;
-    }
-
     // конвертируем шаги в килокалории в заданном месяце, 1 шаг = 50 калорий
-    public double getCaloriesByMonth(int month) {
-        return sumStepsByMonth(month) * 0.05;
+    public double getCalories(int steps) {
+        return steps * 0.05;
     }
 
     // конвертируем шаги в километры в заданном месяце, 1 шаг = 75 см = 0,75 м = 0,00075 км
-    public double getDistanceByMonth(int month) {
-        return sumStepsByMonth(month) * 0.00075;
+    public double getDistance(int steps) {
+        return steps * 0.00075;
     }
-
 }

@@ -1,23 +1,13 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class Main {
 
     public static void main(String[] args) {
-        // Поехали!
-        /*
-        Постановка задачи
-        Компания по производству спортивных носков решила разработать свой счётчик шагов для
-        дополнительной мотивации ведения здорового образа жизни. Написать прототип приложения поручили вам.
-
-        Оно должно предоставлять следующий функционал:
-        -Консольный интерфейс для управления программой;
-        -Хранение данных о количестве пройденных шагов за несколько месяцев;
-        -Ввод вашей цели по количеству шагов в день;
-        -Ввод пройденного количества шагов за день;
-        -Вывод статистики за определённый месяц.
-         */
-
         Scanner scanner = new Scanner(System.in);
 
         StepTracker steptracker = new StepTracker();
@@ -39,7 +29,7 @@ public class Main {
                 steptracker.setTargetSteps(target);
             } else if (command == 4) {
                 System.out.println("Вводим данные из файла.");
-                steptracker.importData("resources/steps2021.csv");
+                importData(steptracker, "resources/steps2021.csv");
             } else if (command == 0) {
                 System.out.println("Выход");
                 break;
@@ -77,5 +67,24 @@ public class Main {
             }
         }
     }
+
+     static void importData(StepTracker object, String filePath) {
+        try {
+            List<String> data = Files.readAllLines(Paths.get(filePath));
+            data.remove(0);
+            System.out.println(data);
+            for (String row : data) {
+                String[] cols = row.split(",");
+                int month = Integer.parseInt(cols[0]);
+                int day = Integer.parseInt(cols[1]);
+                int steps = Integer.parseInt(cols[2]);
+                object.updateMonthData(month, day, steps);
+            }
+
+        } catch (IOException ignored) {
+            System.out.println("Cant read file");
+        }
+    }
+
 }
 
