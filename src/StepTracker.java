@@ -129,16 +129,17 @@ public class StepTracker {
             index++;
         }
         // проходимся по списку и ищем дни подряд
-        for (int i = 0; i < stepsAboveTarget.size() - 1; i++) {
-            if ((stepsAboveTarget.get(i) > 0) && (stepsAboveTarget.get(i+1) > 0)) {
+        for (int i = 0; i < stepsAboveTarget.size(); i++) {
+            if (stepsAboveTarget.get(i) > 0) {
                 count++;
             } else {
-                count = 1;
+                if (count > bestStreak) {
+                    bestStreak = count;
+                }
+                count = 0;
             }
 
-            if (count > bestStreak) {
-                bestStreak = count;
-            }
+
         }
         System.out.println("Лучшая серия: " + bestStreak);
     }
